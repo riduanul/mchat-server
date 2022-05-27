@@ -4,7 +4,7 @@ const cors = require('cors');
 const socketIO = require('socket.io');
 
 const app = express();
-const port = 4000 || process.env.PORT;
+const port = 4000 ;
 
 app.use(cors());
 
@@ -23,7 +23,6 @@ io.on("connection", (socket)=> {
 
     socket.on('joined', ({user})=>{
         users[socket.id]= user;
-        console.log(`${user} has joined`)
         socket.broadcast.emit('userJoined', {user:"Admin", message: `${users[socket.id]} has Joined`})
         socket.emit("welcome", {user:'Admin', message: ` Welcome to the chatroom ${users[socket.id]}`})
     })
@@ -35,7 +34,7 @@ io.on("connection", (socket)=> {
 
     socket.on('disconnect', ()=>{
         socket.broadcast.emit("leave", {user: "Admin", message:`${users[socket.id]} has left`})
-        console.log('user left')
+        
     })    
     
     
